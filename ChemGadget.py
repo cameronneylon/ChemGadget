@@ -32,18 +32,16 @@ def OnBlipSubmitted(properties, context):
 
 
     if chemicallist != None:
-        compoundlist = []
+
         for chemicalname in chemicallist:  # Just pull off first one in list
             r = document.Range(0,0)
             r.start = chemicalname.start()
             r.end = chemicalname.end() + 1
             query = chemicalname.group(2)
             compound = ChemSpiPy.simplesearch(query) # obtain chemspider ID
-            compoundlist.append(compound)
 
-        compound = compoundlist[0]
-        if compound.molfile == '':
-            compound.molfile = """241
+            if compound.molfile == '':
+                compound.molfile = """241
   -OEChem-10200920453D
 
   6  6  0     0  0  0  0  0  0999 V2000
@@ -61,11 +59,11 @@ def OnBlipSubmitted(properties, context):
   5  6  1  0  0  0  0
 M  END
 """
-        gadgeturl = 'http://www.danhagon.me.uk/Wave/ChemSpiderDoodleGadgetMVCDev.xml'
-        gadget = document.Gadget(gadgeturl) # setup gadget instance
-        blip.GetDocument().InsertElement(r.start, gadget) # insert gadget
-        delta = {'molfile' : compound.mol} # set state with molfile for CSID
-        blip.GetDocument().GadgetSubmitDelta(gadget, delta) # submit the delta
+            gadgeturl = 'http://www.danhagon.me.uk/Wave/ChemSpiderDoodleGadgetMVCDev.xml'
+            gadget = document.Gadget(gadgeturl) # setup gadget instance
+            blip.GetDocument().InsertElement(r.start, gadget) # insert gadget
+            delta = {'molfile' : compound.molfile} # set state with molfile for CSID
+            blip.GetDocument().GadgetSubmitDelta(gadget, delta) # submit the delta
 
 
 
