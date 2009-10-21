@@ -32,15 +32,18 @@ def OnBlipSubmitted(properties, context):
 
 
     if chemicallist != None:
+        compoundlist = []
         for chemicalname in chemicallist:  # Just pull off first one in list
             r = document.Range(0,0)
             r.start = chemicalname.start()
             r.end = chemicalname.end() + 1
             query = chemicalname.group(2)
             compound = ChemSpiPy.simplesearch(query) # obtain chemspider ID
+            compoundlist.append(compound)
 
-        if compound.mol == '':
-            compound.mol = """241
+        compound = compoundlist[0]
+        if compound.molfile == '':
+            compound.molfile = """241
   -OEChem-10200920453D
 
   6  6  0     0  0  0  0  0  0999 V2000
