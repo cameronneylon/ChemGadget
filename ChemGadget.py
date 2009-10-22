@@ -41,13 +41,21 @@ def OnBlipSubmitted(properties, context):
             compound = ChemSpiPy.simplesearch(query) # obtain chemspider ID
             chemspiderlink = 'http://www.chemspider.com/Chemical-Structure.%s.html' % compound
 
+            #insert the gadget
             gadgeturl = 'http://www.danhagon.me.uk/Wave/ChemSpiderDoodleGadgetMVCDev.xml'
             gadget = document.Gadget(gadgeturl) # setup gadget instance
             blip.GetDocument().InsertElement(r.start, gadget) # insert gadget
             delta = {'molfile' : compound.getMolFile()} # set state with molfile for CSID
             blip.GetDocument().GadgetSubmitDelta(gadget, delta) # submit the delta
+
+            #cleaning up text and insert link
             blip.GetDocument().SetTextInRange(r, query) # remove markup
-            blip.GetDocument().SetAnnotation(r, key='link/manual', chemspiderlink) #link to CS
+            r.start = blip.GetDocument().GetText().find(query) #re-find range of query
+            r.end = r.start + len(query)
+            blip.GetDocument().SetAnnotation(r, 'link/manual', chemspiderlink) #link to CS
+
+
+
 
 
 
