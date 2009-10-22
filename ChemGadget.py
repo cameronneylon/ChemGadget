@@ -62,8 +62,9 @@ M  END
             gadgeturl = 'http://www.danhagon.me.uk/Wave/ChemSpiderDoodleGadgetMVCDev.xml'
             gadget = document.Gadget(gadgeturl) # setup gadget instance
             blip.GetDocument().InsertElement(r.start, gadget) # insert gadget
-            deltamolfile = compound.getMolFile
-            delta = {'molfile' : deltamolfile} # set state with molfile for CSID
+            #deltamolfile = compound.getMolFile
+            #deltamolfile = compound.molfile
+            delta = {'molfile' : compound.getMolFile()} # set state with molfile for CSID
             blip.GetDocument().GadgetSubmitDelta(gadget, delta) # submit the delta
 
 
