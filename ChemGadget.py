@@ -40,7 +40,7 @@ def OnBlipSubmitted(properties, context):
             query = chemicalname.group(2)
             compound = ChemSpiPy.simplesearch(query) # obtain chemspider ID
 
-            if compound.molfile == '':
+            if compound.getMolFile == '':
                 compound.molfile = """241
   -OEChem-10200920453D
 
@@ -62,7 +62,7 @@ M  END
             gadgeturl = 'http://www.danhagon.me.uk/Wave/ChemSpiderDoodleGadgetMVCDev.xml'
             gadget = document.Gadget(gadgeturl) # setup gadget instance
             blip.GetDocument().InsertElement(r.start, gadget) # insert gadget
-            deltamolfile = compound.molfile().__string__
+            deltamolfile = compound.getMolFile
             delta = {'molfile' : deltamolfile} # set state with molfile for CSID
             blip.GetDocument().GadgetSubmitDelta(gadget, delta) # submit the delta
 
